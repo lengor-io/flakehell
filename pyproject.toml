@@ -84,10 +84,11 @@ classifiers=[
 [tool.poetry.scripts]
 flakehell = "flakehell:entrypoint"
 flake8helled = "flakehell:flake8_entrypoint"
-[tool.flit.entrypoints."flake8.extension"]
+
+[tool.poetry.plugins."flake8.extension"]
 pylint = "flakehell.plugins:PyLintChecker"
 
-[tool.flit.entrypoints."flake8.report"]
+[tool.poetry.plugins."flake8.report"]
 baseline = "flakehell.formatters:BaseLineFormatter"
 colored = "flakehell.formatters:ColoredFormatter"
 gitlab = "flakehell.formatters:GitlabFormatter"
