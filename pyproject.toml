@@ -58,7 +58,7 @@ import_heading_localfolder = "app"
 
 [tool.poetry]
 name = "flakehell"
-version = "0.8.0"
+version = "0.8.1"
 description = "It's a [Flake8](https://gitlab.com/pycqa/flake8) wrapper to make it cool."
 authors = ["Gram (orsinium) <master_fess@mail.ru>", "Gytis Raciukaitis <206232+noxxious@users.noreply.github.com>"]
 license = "MIT"
