@@ -220,10 +220,7 @@ def extract_flake8_pytest_style() -> Dict[str, str]:
 
 
 def extract_flake8_annotations_complexity() -> Dict[str, str]:
-    from flake8_annotations_complexity.checker import AnnotationsComplexityChecker
-
-    code, message = AnnotationsComplexityChecker._error_message_template.split(' ', maxsplit=1)
-    return {code: message}
+    return extract_default(name='flake8_annotations_complexity.ast_helpers')
 
 
 def extract_flake8_future_import() -> Dict[str, str]:

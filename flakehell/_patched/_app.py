@@ -116,6 +116,7 @@ class FlakeHellApplication(Application):
             config_finder=config_finder,
         )
         parsed_config = config_parser.parse()
+        config.extended_default_ignore = self.option_manager.extended_default_ignore.copy()
         config.extended_default_select = self.option_manager.extended_default_select.copy()
         for config_name, value in parsed_config.items():
             dest_name = config_name
