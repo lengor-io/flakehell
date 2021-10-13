@@ -115,6 +115,24 @@ def check_include(code: str, rules: List[str]) -> bool:
     return include
 
 
+def _update_rules(current_rules: List[str], new_rules: List[str]) -> List[str]:
+    updated_rules = []
+
+    if not current_rules:
+        return new_rules
+
+    for rule in new_rules:
+        for checked_rule in current_rules:
+            if checked_rule == "+*":
+                continue
+            if rule[1:] not in checked_rule:
+                updated_rules.append(checked_rule)
+
+        updated_rules.append(rule)
+
+    return updated_rules
+
+
 def get_exceptions(
     path: Union[str, Path], exceptions: Dict[str, PluginsType], root: Path = None,
 ) -> PluginsType:
@@ -143,20 +161,17 @@ def get_exceptions(
             continue
         if fnmatch(filename=path, patterns=[path_rule]):
             for plugin_name, exception_list in rules.items():
-                if plugin_name in aggregated_rules:
-                    aggregated_rules[plugin_name].extend(exception_list)
-                else:
-                    aggregated_rules[plugin_name] = exception_list
-
+                aggregated_rules[plugin_name] = _update_rules(
+                    aggregated_rules.get(plugin_name, []), exception_list,
+                )
     # prefix
     for path_rule, rules in exceptions:
         if '*' in path_rule:
             continue
         if path.startswith(path_rule):
             for plugin_name, exception_list in rules.items():
-                if plugin_name in aggregated_rules:
-                    aggregated_rules[plugin_name].extend(exception_list)
-                else:
-                    aggregated_rules[plugin_name] = exception_list
+                aggregated_rules[plugin_name] = _update_rules(
+                    aggregated_rules.get(plugin_name, []), exception_list,
+                )
 
     return aggregated_rules
